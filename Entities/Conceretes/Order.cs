@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Entities.Conceretes
 {
-    public class Customer:IEntity
+    public class Order:IEntity
     {
+        public int OrderId { get; set; }
+        public int EmployeeId { get; set; }
         public string CustomerId { get; set; }
-        public string ContactName { get; set; }
-        public string CompanyName { get; set; }
-        public string City { get; set; }
+        public string ShipCity { get; set; }
+        public DateTime OrderDate { get; set; }
     }
 }
