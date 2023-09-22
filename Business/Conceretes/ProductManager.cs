@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -29,12 +30,13 @@ namespace Business.Conceretes
         }
 
         [ValidationAspect(typeof(ProductValidator))]
+        [SecuredOperation("product.add,admin")]
         public IResult Add(Product product)
         {
             //business codes.
 
-            IResult result = BusinessRules.Run(CheckIfProductNameExixst(product.ProductName),
-                CheckIfCategoryLimitExceded(),CheckIfProductCountOfCategoryCorrect(product.CategoryId)); ;
+            IResult? result = BusinessRules.Run(CheckIfProductNameExixst(product.ProductName),
+                CheckIfCategoryLimitExceded(),CheckIfProductCountOfCategoryCorrect(product.CategoryId));
 
             if (result != null)
             {
