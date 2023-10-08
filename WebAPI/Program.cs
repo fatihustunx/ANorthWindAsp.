@@ -5,6 +5,8 @@ using Autofac.Extensions.DependencyInjection;
 using Business.Abstracts;
 using Business.Conceretes;
 using Business.DependencyResolver.Autofac;
+using Core.DependencyResolver;
+using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
@@ -38,7 +40,7 @@ namespace WebAPI
             //builder.Services.AddSingleton<IProductService,ProductManager>();
             //builder.Services.AddSingleton<IProductDal,EfProductDal>();
 
-            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -57,7 +59,12 @@ namespace WebAPI
                     };
                 });
 
-            ServiceTool.Create(builder.Services);
+            //ServiceTool.Create(builder.Services);
+
+            builder.Services.AddDependencyResolver(new ICoreModule[]
+            {
+                new CoreModule()
+            });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

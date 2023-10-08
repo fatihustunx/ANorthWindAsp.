@@ -49,7 +49,7 @@ namespace Business.Conceretes
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordSalt, userToCheck.PasswordHash))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordSalt, userToCheck.PasswordHash))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }
