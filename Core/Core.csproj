@@ -17,9 +17,4 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Aspects\Autofac\Logging\" />
-    <Folder Include="Aspects\Autofac\Exception\" />
-  </ItemGroup>
-
 </Project>
