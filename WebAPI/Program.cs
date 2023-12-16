@@ -90,6 +90,8 @@ namespace WebAPI
                 app.UseSwaggerUI();
             }
 
+            app.ConfigureCustomExceptionMiddleware();
+
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
