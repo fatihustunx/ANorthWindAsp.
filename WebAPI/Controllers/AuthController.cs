@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
+
     [ApiController]
+
     public class AuthController : Controller
     {
         private IAuthService _authService;
@@ -19,38 +21,27 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
-            var userToLogin = _authService.Login(userForLoginDto);
-            if (!userToLogin.Success)
+            var res = _authService.RunToLogin(userForLoginDto);
+
+            if (res.Success)
             {
-                return BadRequest(userToLogin.Message);
+                return Ok(res);
             }
 
-            var result = _authService.CreateAccessToken(userToLogin.Data);
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return BadRequest(res);
         }
 
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
-            var userExists = _authService.UserExists(userForRegisterDto.Email);
-            if (!userExists.Success)
+            var res = _authService.RunToRegister(userForRegisterDto);
+
+            if (res.Success)
             {
-                return BadRequest(userExists.Message);
+                return Ok(res);
             }
 
-            var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data);
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return BadRequest(res);
         }
     }
 }
